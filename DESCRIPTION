@@ -1,12 +1,20 @@
 Package: varSummary
-Version: 0.0.0.9000
 Title: Variable Summary
-Description: Creating a named list with value count information of variables of a dataframe.
-Authors@R: person(given = "Sebastien",
-       family = "Rochette",
-       role = c("aut", "cre"),
-       email = "lukas.groeninger@gmail.com")
+Version: 0.0.0.9000
+Authors@R: 
+    person("Lukas", "Gröninger", , "lukas.groeninger@gmail.com", role = c("aut", "cre"))
+Description: Creating a named list with value count information of
+    variables of a dataframe.
 License: MIT + file LICENSE
+Imports: 
+    dplyr,
+    janitor,
+    purrr,
+    rlang,
+    tibble,
+    tidyselect
+Suggests: 
+    testthat
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

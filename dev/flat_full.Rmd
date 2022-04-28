@@ -32,15 +32,15 @@ and `system.file()` to read it in your examples.
 dir.create(here::here("inst"))
 
 # Example dataset
-file.copy(system.file("nyc_squirrels_sample.csv", package = "fusen"), here::here("inst"))
+saveRDS(palmerpenguins::penguins, file = here::here("inst", "penguins.RDS"))
 # Make your dataset file available to the current Rmd
 pkgload::load_all(path = here::here(), export_all = FALSE)
 
 # You will be able to read your example data file in each of your function examples and tests as follows
-datafile <- system.file("nyc_squirrels_sample.csv", package = "varSummary")
-nyc_squirrels <- read.csv(datafile)
+datafile <- system.file("penguins.RDS", package = "varSummary")
+penguins <- readRDS(datafile)
 
-nyc_squirrels
+penguins
 ```
 
 
@@ -61,19 +61,28 @@ After inflating the template
 -->
 
 ```{r function}
-#' My median
+#' Table function to create named variable summary list
 #'
-#' @param x Vector of Numeric values
-#' @inheritParams stats::median
+#' @param df Dataframe
+#' 
+#' @param vars Variable Selection (tidyselect)
 #'
 #' @return
-#' Median of vector x
+#' Named list of variable counts and percentages
 #' @export
 #'
 #' @examples
-my_median <- function(x, na.rm = TRUE) {
-  if (!is.numeric(x)) {stop("x should be numeric")}
-  stats::median(x, na.rm = na.rm)
+tbl <- function(df, vars) {
+  
+  expression <- rlang::enquo(vars)
+  col_names <- tidyselect::eval_select(expression, data = df) |>
+    names()
+  col_names |>
+    purrr::map(~janitor::tabyl(df, !!rlang::sym(.x)) |> 
+                 dplyr::arrange(dplyr::desc(n)) |> 
+                 dplyr::mutate(cum_percent = cumsum(percent)) |> 
+                 tibble::as_tibble()) |>
+    rlang::set_names(col_names)
 }
 ```
 
@@ -92,7 +101,15 @@ After inflating the template
 -->
 
 ```{r examples}
-my_median(1:12)
+datafile <- system.file("penguins.RDS", package = "varSummary")
+penguins <- readRDS(datafile)
+
+
+tbl(penguins, starts_with("bill"))
+
+tbl(penguins, ends_with("_mm"))
+
+tbl(penguins, c(island, sex, species))
 ```
 
 <!--
@@ -110,54 +127,10 @@ After inflating the template
 
 ```{r tests}
 test_that("my_median works properly and show error if needed", {
-  expect_true(my_median(1:12) == 6.5)
-  expect_error(my_median("text"))
+  expect_error(tbl("text"))
 })
 ```
 
-# Calculate the mean of a vector
-
-<!--
-There can be other functions, examples and tests in your flat template.
-Each of them will be inflated in a different file, provided that there is a level-1 or level-2 section title to separate from previous functions.
--->
-
-## Use sub-functions in the same chunk
-
-```{r function-my_other_median}
-#' My Other median
-#'
-#' @param x Vector of Numeric values
-#' @inheritParams stats::median
-#'
-#' @return
-#' Median of vector x
-#' @export
-#'
-#' @examples
-my_other_median <- function(x, na.rm = TRUE) {
-  if (!is.numeric(x)) {stop("x should be numeric")}
-  sub_median(x, na.rm =na.rm)
-}
-
-#' Core of the median not exported
-#' @param x Vector of Numeric values
-#' @inheritParams stats::median
-sub_median <- function(x, na.rm = TRUE) {
-  stats::median(x, na.rm)
-}
-```
-
-```{r examples-my_other_median}
-my_other_median(1:12)
-```
-
-```{r tests-my_other_median}
-test_that("my_median works properly and show error if needed", {
-  expect_true(my_other_median(1:12) == 6.5)
-  expect_error(my_other_median("text"))
-})
-```
 
 <!--
 # There can be development actions
@@ -174,7 +147,7 @@ These are only included in the present flat template file, their content will no
 ```{r development-inflate, eval=FALSE}
 # Keep eval=FALSE to avoid infinite loop in case you hit the knit button
 # Execute in the console directly
-fusen::inflate(flat_file = "dev/flat_full.Rmd", vignette_name = "Get started")
+fusen::inflate(flat_file = "dev/flat_full.Rmd", vignette_name = NA)
 ```
 
 

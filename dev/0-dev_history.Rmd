@@ -17,11 +17,11 @@ fusen::fill_description(
   pkg = here::here(),
   fields = list(
     Title = "Variable Summary",
-    Description = "Creating a named list with value count information of variables of a dataframe",
+    Description = "Creating a named list with value count information of variables of a dataframe.",
     `Authors@R` = c(
-      person("Sebastien", "Rochette", email = "lukas.groeninger@gmail.com", role = c("aut", "cre"))
+      person("Lukas", "Gröninger", email = "lukas.groeninger@gmail.com", role = c("aut", "cre"))
     )
-  ))
+  ), overwrite = TRUE)
 # Define License with use_*_license()
 usethis::use_mit_license("Lukas Gröninger")
 ```
@@ -40,7 +40,7 @@ usethis::git_vaccinate()
 # README
 usethis::use_readme_rmd()
 # Code of Conduct
-usethis::use_code_of_conduct("contact@fake.com")
+usethis::use_code_of_conduct("lukas.groeninger@gmail.com")
 # NEWS
 usethis::use_news_md()
 ```
@@ -53,7 +53,7 @@ usethis::use_news_md()
 
 ```{r, eval=FALSE}
 # Pipe
-usethis::use_pipe()
+# usethis::use_pipe()
 
 # package-level documentation
 usethis::use_package_doc()
