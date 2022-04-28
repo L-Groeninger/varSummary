@@ -6,6 +6,8 @@ Authors@R:
 Description: Creating a named list with value count information of
     variables of a dataframe.
 License: MIT + file LICENSE
+URL: https://github.com/L-Groeninger/varSummary
+BugReports: https://github.com/L-Groeninger/varSummary/issues
 Imports: 
     dplyr,
     janitor,
@@ -14,9 +16,11 @@ Imports:
     tibble,
     tidyselect
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-URL: https://github.com/L-Groeninger/varSummary
-BugReports: https://github.com/L-Groeninger/varSummary/issues

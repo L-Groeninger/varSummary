@@ -8,6 +8,14 @@
 \description{
 Creating a named list with value count information of variables of a dataframe.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/L-Groeninger/varSummary}
+  \item Report bugs at \url{https://github.com/L-Groeninger/varSummary/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Lukas Gröninger \email{lukas.groeninger@gmail.com}
 
