@@ -1,0 +1,12 @@
+Package: varSummary
+Version: 0.0.0.9000
+Title: Variable Summary
+Description: Creating a named list with value count information of variables of a dataframe.
+Authors@R: person(given = "Sebastien",
+       family = "Rochette",
+       role = c("aut", "cre"),
+       email = "lukas.groeninger@gmail.com")
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
